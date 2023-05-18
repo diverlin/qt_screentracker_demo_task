@@ -10,10 +10,12 @@ CONFIG += c++11
 
 SOURCES += \
     src/main.cpp \
-    src/mainwindow.cpp
+    src/mainwindow.cpp \
+    src/gallerywidget.cpp
 
 HEADERS += \
     src/mainwindow.h
+    src/gallerywidget.h
 
 FORMS += \
     forms/mainwindow.ui
