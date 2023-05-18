@@ -1,6 +1,8 @@
 QT += testlib
 
-include($PWD/../src/qt_screentracker_demo_task.pri)
+include($$PWD/../qt_screentracker_app/qt_screentracker_lib.pri)
+
+INCLUDEPATH += $$PWD/../qt_screentracker_app
 
 SOURCES += \
     $$PWD/main.cpp \

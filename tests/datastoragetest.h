@@ -6,11 +6,12 @@
 class DataStorageTest : public QObject {
     Q_OBJECT
 public:
-    DataStorageTest();
-    ~DataStorageTest();
+    DataStorageTest()=default;
+    ~DataStorageTest()=default;
 
 private slots:
-    void testBase();
+    void testDbCreation();
+    void testDbReadWrite();
 };
 
 
