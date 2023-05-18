@@ -8,6 +8,7 @@ namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
 class ScreensShooter;
+class DataStorage;
 
 class MainWindow : public QMainWindow
 {
@@ -20,6 +21,7 @@ public:
 private:
     Ui::MainWindow* m_ui = nullptr;
     ScreensShooter* m_screensShooter = nullptr;
+    DataStorage* m_dataStorage = nullptr;
 
     QString m_prevImagePath;
     const QString& getPrevImagePath() const { return m_prevImagePath; }

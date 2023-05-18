@@ -4,11 +4,13 @@
 #include "screensshooter.h"
 #include "hashsumutils.h"
 #include "imagecomparator.h"
+#include "datastorage.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::MainWindow)
     , m_screensShooter(new ScreensShooter(this))
+    , m_dataStorage(new DataStorage("data.db"))
 {
     m_ui->setupUi(this);
 

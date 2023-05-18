@@ -1,4 +1,4 @@
-QT += core gui widgets
+QT += core gui widgets sql testlib
 
 CONFIG += c++11
 
@@ -13,6 +13,9 @@ SOURCES += \
     src/screensshooter.cpp \
     src/hashsumutils.cpp \
     src/imagecomparator.cpp \
+    src/datastorage.cpp \
+    src/pathprovider.cpp \
+    test/datastoragetest.cpp \
 
 HEADERS += \
     src/mainwindow.h \
@@ -20,6 +23,9 @@ HEADERS += \
     src/screensshooter.h \
     src/hashsumutils.h \
     src/imagecomparator.h \
+    src/datastorage.h \
+    src/pathprovider.h \
+    test/datastoragetest.h \
 
 FORMS += \
     forms/mainwindow.ui \
