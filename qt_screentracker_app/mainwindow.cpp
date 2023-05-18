@@ -6,6 +6,8 @@
 #include "imagecomparator.h"
 #include "datastorage.h"
 
+#include <QDebug>
+
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , m_ui(new Ui::MainWindow)
