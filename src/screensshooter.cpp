@@ -1,9 +1,13 @@
 #include "screensshooter.h"
 
 #include <QApplication>
+#if QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)
 #include <QDesktopWidget>
+#endif
 #include <QScreen>
 #include <QPixmap>
+#include <QStandardPaths>
+#include <QDir>
 
 #ifdef Q_OS_LINUX
 #include <QProcessEnvironment>
@@ -67,16 +71,15 @@ void ScreensShooter::makeScreensShotGeneric()
             combinedScreenshot = screenScreenshot;
         } else {
             // Combine the screen screenshot with the existing combined screenshot
+#if QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)
             combinedScreenshot = QPixmap::grabWindow(QApplication::desktop()->winId()).copy(0, 0, combinedScreenshot.width(), combinedScreenshot.height());
+#else
+            qCritical() << "multimonitor image saving is not implemented on Qt6 variant, please use Qt5 for now or implement it on Qt6";
+#endif
         }
     }
 
-    QString filePath = "combined_screenshot.png";
-
-    // Save the screenshot to a file
-    combinedScreenshot.save(filePath);
-    qDebug() << "save" << filePath;
-    emit screenShotIsReady(filePath);
+    saveImageFile(combinedScreenshot);
 }
 
 #ifdef Q_OS_LINUX
@@ -90,12 +93,38 @@ void ScreensShooter::makeScreensShotOnWaylandDisplayServer()
 {
     qCritical() << "isRunningOnWaylandDisplayServer not implemented yet";
     assert(false);
-//    QString filePath = "combined_screenshot.png";
-
-//    // Save the screenshot to a file
-//    screenshot.save(filePath);
-
-//    qDebug() << "save" << filePath;
-//    emit screenShotIsReady(filePath);
+    saveImageFile(image);
 }
 #endif // Q_OS_LINUX
+
+void ScreensShooter::saveImageFile(const QPixmap& image)
+{
+    if (m_imageLocationRoot.isEmpty()) {
+        m_imageLocationRoot = QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+        m_imageLocationRoot += "/images";
+
+        // let's check if the path is not a file to avoid collision with folder name
+        QFileInfo fi(m_imageLocationRoot);
+        if (fi.exists() && fi.isFile()) {
+            qInfo() << m_imageLocationRoot << " is file, but must be a folder, let's remove the file, in order create folder";
+            QFile::remove(m_imageLocationRoot);
+        }
+
+        // create image storage location if it doesn't exists
+        if (!QFileInfo::exists(m_imageLocationRoot)) {
+            if (!QDir(m_imageLocationRoot).mkpath(m_imageLocationRoot)) {
+                qCritical() << "Failed to create path" << m_imageLocationRoot;
+            } else {
+                qInfo() << "images storage location" << m_imageLocationRoot << " was created";
+            }
+        }
+    }
+
+    QString fileName = QString("screensshot_%1.png").arg(QDateTime::currentDateTime().toString()).replace(" ", "_");
+    QString filePath = m_imageLocationRoot + "/" + fileName;
+
+    // Save the screenshot to a file
+    image.save(filePath);
+    qDebug() << "save" << filePath;
+    emit screenShotIsReady(filePath);
+}

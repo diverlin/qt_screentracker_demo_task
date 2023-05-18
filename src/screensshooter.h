@@ -26,12 +26,15 @@ signals:
 
 private:
     QTimer m_timer;
+    QString m_imageLocationRoot;
 
     void makeScreensShotGeneric();
 #ifdef Q_OS_LINUX
     bool isRunningOnWaylandDisplayServer() const;
     void makeScreensShotOnWaylandDisplayServer();
 #endif
+
+    void saveImageFile(const QPixmap&);
 };
 
 #endif // SCREENSSHOOTER_H
