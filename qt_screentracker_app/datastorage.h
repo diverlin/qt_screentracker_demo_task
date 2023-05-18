@@ -15,8 +15,9 @@ public:
 
     bool insertRows(const QString& fileName, const QString& md5Sum, double diffPerc);
 
-    // todo: implement getting fixed number of latest rows
-    bool readRows(std::vector<std::tuple<QString, QString, double>>& result) const;
+    bool readRows(size_t limit, std::vector<std::tuple<QString, QString, double>>& result) const;
+
+    bool reset();
 
 private:
     QString m_dbFilePath;

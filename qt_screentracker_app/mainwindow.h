@@ -25,6 +25,10 @@ private:
 
     QString m_prevImagePath;
     const QString& getPrevImagePath() const { return m_prevImagePath; }
+
+    QPixmap loadPixmap(const QString& filePath);
+    void reset();
+    void loadFromDataStorage();
 };
 
 #endif // MAINWINDOW_H

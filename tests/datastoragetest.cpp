@@ -30,7 +30,7 @@ void DataStorageTest::testDbReadWrite()
 
     // read data
     std::vector<std::tuple<QString, QString, double>> rows;
-    QVERIFY(db.readRows(rows));
+    QVERIFY(db.readRows(100, rows));
     QCOMPARE(rows.size(),3);
     QString id, md5Sum;
     double percDiff;

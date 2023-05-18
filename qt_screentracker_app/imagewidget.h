@@ -10,6 +10,9 @@ class ImageWidget : public QLabel
 public:
     ImageWidget(QWidget* parent = nullptr);
     ~ImageWidget();
+
+    void setImage(const QPixmap& pixmap, const QString& hash, double diffPerc);
+    void clear();
 };
 
 #endif // IMAGEWIDGET_H

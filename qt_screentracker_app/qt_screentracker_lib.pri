@@ -19,6 +19,7 @@ HEADERS += \
     $$PWD/imagecomparator.h \
     $$PWD/datastorage.h \
     $$PWD/pathprovider.h \
+    $$PWD/fixedqueue.h \
 
 FORMS += \
     $$PWD/forms/mainwindow.ui \

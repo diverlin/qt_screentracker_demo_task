@@ -14,6 +14,17 @@ DataStorage::~DataStorage()
 
 }
 
+bool DataStorage::reset()
+{
+    bool status = QFile::remove(m_dbFilePath);
+    if (status) {
+        createTable();
+    } else {
+        qCritical() << "unable to delete" << m_dbFilePath;
+    }
+    return status;
+}
+
 bool DataStorage::createTable() {
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
     db.setDatabaseName(m_dbFilePath);
@@ -57,7 +68,7 @@ bool DataStorage::insertRows(const QString& fileName, const QString& md5Sum, dou
     return true;
 }
 
-bool DataStorage::readRows(std::vector<std::tuple<QString, QString, double>>& result) const
+bool DataStorage::readRows(size_t limit, std::vector<std::tuple<QString, QString, double>>& result) const
 {
     result.clear();
 
@@ -67,7 +78,7 @@ bool DataStorage::readRows(std::vector<std::tuple<QString, QString, double>>& re
         return false;
     }
 
-    QSqlQuery query("SELECT * FROM activity");
+    QSqlQuery query(QString("SELECT * FROM activity ORDER BY id DESC LIMIT %1").arg(limit));
 
     while (query.next()) {
         QString id = query.value("id").toString();
