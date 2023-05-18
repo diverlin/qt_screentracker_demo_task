@@ -13,6 +13,4 @@ SUBDIRS += \
 tests.depends = qt_screentracker_app
 tests.subdir = tests
 
-#include(src/qt_screentracker_demo_task.pri)
-
 
