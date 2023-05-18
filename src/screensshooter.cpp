@@ -125,6 +125,6 @@ void ScreensShooter::saveImageFile(const QPixmap& image)
 
     // Save the screenshot to a file
     image.save(filePath);
-    qDebug() << "save" << filePath;
+    qInfo() << "save" << filePath;
     emit screenShotIsReady(filePath);
 }

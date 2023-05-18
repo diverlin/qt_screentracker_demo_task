@@ -22,7 +22,7 @@ public:
     void makeScreensShot();
 
 signals:
-    void screenShotIsReady(const QString& filePath);
+    void screenShotIsReady(QString filePath);
 
 private:
     QTimer m_timer;

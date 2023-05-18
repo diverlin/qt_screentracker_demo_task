@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 
 #include "screensshooter.h"
+#include "hashsumutils.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -19,6 +20,11 @@ MainWindow::MainWindow(QWidget* parent)
 //            m_screenShooter->start();
 //            m_ui->pbToggle->setProperty("running", true);
 //        }
+    });
+
+    connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [](QString filePath){
+        QString hash = HashSumUtils::getHashSumOfFile(filePath);
+        qInfo() << "get hash" << hash << "for" << filePath;
     });
 }
 
