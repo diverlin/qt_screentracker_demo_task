@@ -22,6 +22,9 @@
       </property>
      </widget>
     </item>
+    <item>
+     <widget class="GalleryWidget" name="gallery" native="true"/>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -36,6 +39,14 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>GalleryWidget</class>
+   <extends>QWidget</extends>
+   <header>gallerywidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
