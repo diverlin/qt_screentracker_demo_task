@@ -5,27 +5,27 @@
 
 void ImageComparatorTest::testDiff_0_Perc()
 {
-    double percDiff = ImageComparator::calculateImageDifference(QString(":/resource/white_100.png"), QString(":/resource/white_100.png"));
-    QCOMPARE(int(percDiff), 0);
+    double diffPerc = ImageComparator::calculateImageDifference(QString(":/resource/white_100.png"), QString(":/resource/white_100.png"));
+    QCOMPARE(int(diffPerc), 0);
 
-    percDiff = ImageComparator::calculateImageDifference(QString(":/resource/black_100.png"), QString(":/resource/black_100.png"));
-    QCOMPARE(int(percDiff), 0);
+    diffPerc = ImageComparator::calculateImageDifference(QString(":/resource/black_100.png"), QString(":/resource/black_100.png"));
+    QCOMPARE(int(diffPerc), 0);
 
-    percDiff = ImageComparator::calculateImageDifference(QString(":/resource/white_50_black_50.png"), QString(":/resource/white_50_black_50.png"));
-    QCOMPARE(int(percDiff), 0);
+    diffPerc = ImageComparator::calculateImageDifference(QString(":/resource/white_50_black_50.png"), QString(":/resource/white_50_black_50.png"));
+    QCOMPARE(int(diffPerc), 0);
 }
 
 void ImageComparatorTest::testDiff_50_Perc()
 {
-    double percDiff = ImageComparator::calculateImageDifference(QString(":/resource/white_100.png"), QString(":/resource/white_50_black_50.png"));
-    QCOMPARE(int(percDiff), 50);
+    double diffPerc = ImageComparator::calculateImageDifference(QString(":/resource/white_100.png"), QString(":/resource/white_50_black_50.png"));
+    QCOMPARE(int(diffPerc), 50);
 
-    percDiff = ImageComparator::calculateImageDifference(QString(":/resource/black_100.png"), QString(":/resource/white_50_black_50.png"));
-    QCOMPARE(int(percDiff), 50);
+    diffPerc = ImageComparator::calculateImageDifference(QString(":/resource/black_100.png"), QString(":/resource/white_50_black_50.png"));
+    QCOMPARE(int(diffPerc), 50);
 }
 
 void ImageComparatorTest::testDiff_100_Perc()
 {
-    double percDiff = ImageComparator::calculateImageDifference(QString(":/resource/white_100.png"), QString(":/resource/black_100.png"));
-    QCOMPARE(int(percDiff), 100);
+    double diffPerc = ImageComparator::calculateImageDifference(QString(":/resource/white_100.png"), QString(":/resource/black_100.png"));
+    QCOMPARE(int(diffPerc), 100);
 }

@@ -33,25 +33,25 @@ void DataStorageTest::testDbReadWrite()
     QVERIFY(db.readRows(100, rows));
     QCOMPARE(rows.size(),3);
     QString id, md5Sum;
-    double percDiff;
+    double diffPerc;
 
     // test read row1
-    std::tie(id, md5Sum, percDiff) = rows[0];
+    std::tie(id, md5Sum, diffPerc) = rows[0];
     QCOMPARE(id, "1");
     QCOMPARE(md5Sum, "xxx");
-    QCOMPARE(percDiff, 0.2);
+    QCOMPARE(diffPerc, 0.2);
 
     // test read row2
-    std::tie(id, md5Sum, percDiff) = rows[1];
+    std::tie(id, md5Sum, diffPerc) = rows[1];
     QCOMPARE(id, "2");
     QCOMPARE(md5Sum, "yyy");
-    QCOMPARE(percDiff, 0.3);
+    QCOMPARE(diffPerc, 0.3);
 
     // test read row3
-    std::tie(id, md5Sum, percDiff) = rows[2];
+    std::tie(id, md5Sum, diffPerc) = rows[2];
     QCOMPARE(id, "3");
     QCOMPARE(md5Sum, "zzz");
-    QCOMPARE(percDiff, 0.4);
+    QCOMPARE(diffPerc, 0.4);
 
     // remove db
     QVERIFY(QFile(db.filePath()).remove());

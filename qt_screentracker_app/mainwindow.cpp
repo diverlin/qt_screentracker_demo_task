@@ -36,17 +36,17 @@ MainWindow::MainWindow(QWidget* parent)
     connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [this](QString filePath){
         QString hash = HashSumUtils::getHashSumOfFile(filePath);
         QString prevImagePath = getPrevImagePath();
-        double percDiff = 100.0;
+        double diffPerc = 100.0;
         if (!prevImagePath.isEmpty()) {
-            percDiff = ImageComparator::calculateImageDifference(prevImagePath, filePath);
-            qInfo() << "perc difference=" << percDiff << "%";
+            diffPerc = ImageComparator::calculateImageDifference(prevImagePath, filePath);
+            qInfo() << "perc difference=" << diffPerc << "%";
         }
         qInfo() << "hash=" << hash << "for" << filePath;
 
         QString baseFileName = QFileInfo(filePath).baseName();
-        m_dataStorage->insertRows(baseFileName, hash, percDiff);
+        m_dataStorage->insertRows(baseFileName, hash, diffPerc);
         QPixmap pixmap = loadPixmap(filePath);
-        m_ui->gallery->push(pixmap, hash, percDiff);
+        m_ui->gallery->push(pixmap, hash, diffPerc);
 
         m_prevImagePath = filePath;
     });
