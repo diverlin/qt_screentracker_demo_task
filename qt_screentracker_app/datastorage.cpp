@@ -35,7 +35,7 @@ bool DataStorage::createTable() {
     }
 
     QSqlQuery query;
-    QString createQuery = "CREATE TABLE IF NOT EXISTS activity (id STRING PRIMARY KEY, md5Sum STRING, diffPerc DOUBLE)";
+    QString createQuery = "CREATE TABLE IF NOT EXISTS activity (id INTEGER PRIMARY KEY, baseFileName STRING, md5Sum STRING, diffPerc DOUBLE)";
     if (!query.exec(createQuery)) {
         qDebug() << "Failed to create table:" << query.lastError().text();
         return false;
@@ -54,8 +54,8 @@ bool DataStorage::insertRows(const QString& fileName, const QString& md5Sum, dou
     }
 
     QSqlQuery query;
-    query.prepare("INSERT INTO activity (id, md5Sum, diffPerc) VALUES (:id, :md5Sum, :diffPerc)");
-    query.bindValue(":id", fileName);
+    query.prepare("INSERT INTO activity (baseFileName, md5Sum, diffPerc) VALUES (:baseFileName, :md5Sum, :diffPerc)");
+    query.bindValue(":baseFileName", fileName);
     query.bindValue(":md5Sum", md5Sum);
     query.bindValue(":diffPerc", diffPerc);
 
@@ -79,14 +79,16 @@ bool DataStorage::readRows(size_t limit, std::vector<std::tuple<QString, QString
     }
 
     QSqlQuery query(QString("SELECT * FROM activity ORDER BY id DESC LIMIT %1").arg(limit));
+    //QSqlQuery query(QString("SELECT * FROM activity LIMIT %1").arg(limit));
 
     while (query.next()) {
-        QString id = query.value("id").toString();
+        int id = query.value("id").toInt();
+        QString baseFileName = query.value("baseFileName").toString();
         QString md5Sum = query.value("md5Sum").toString();
         double diffPerc = query.value("diffPerc").toDouble();
 
-        result.emplace_back(std::tuple<QString, QString, double>{id, md5Sum, diffPerc});
-        //qDebug() << "id:" << id << "md5Sum:" << md5Sum << "diffPerc:" << diffPerc;
+        result.emplace_back(std::tuple<QString, QString, double>{baseFileName, md5Sum, diffPerc});
+        qDebug() << "id:" << id << "baseFileName:" << baseFileName << "md5Sum:" << md5Sum << "diffPerc:" << diffPerc;
     }
 
     db.close();

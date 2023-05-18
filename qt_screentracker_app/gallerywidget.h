@@ -19,7 +19,7 @@ public:
 
     int cellsCount() const { return GALLERY_ROWS_NUM*GALLERY_ROWS_NUM; }
     void push(const QPixmap& pixmap, const QString hash, double percDiff);
-    void reset();
+    void clear();
 
 private:
     QGridLayout* m_gridLayout = nullptr;

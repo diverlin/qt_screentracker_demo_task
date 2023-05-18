@@ -13,6 +13,9 @@ public:
 
     void setImage(const QPixmap& pixmap, const QString& hash, double diffPerc);
     void clear();
+
+private:
+    QLabel* m_overlay;
 };
 
 #endif // IMAGEWIDGET_H

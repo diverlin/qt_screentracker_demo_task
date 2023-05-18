@@ -27,7 +27,7 @@ private:
     const QString& getPrevImagePath() const { return m_prevImagePath; }
 
     QPixmap loadPixmap(const QString& filePath);
-    void reset();
+    void clear();
     void loadFromDataStorage();
 };
 

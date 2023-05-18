@@ -8,6 +8,7 @@
 #include <QScreen>
 #include <QPixmap>
 #include <QDateTime>
+#include <QRandomGenerator>
 
 #ifdef Q_OS_LINUX
 #include <QProcessEnvironment>
@@ -99,7 +100,9 @@ void ScreensShooter::makeScreensShotOnWaylandDisplayServer()
 
 void ScreensShooter::saveImageFile(const QPixmap& image)
 {
-    QString fileName = QString("screensshot_%1.png").arg(QDateTime::currentDateTime().toString());
+    QString randomSuffix = QString::number(QRandomGenerator::global()->generate());
+
+    QString fileName = QString("screensshot_%1_%2.png").arg(QDateTime::currentDateTime().toString()).arg(randomSuffix);
     fileName = fileName.replace(" ", "_");
     fileName = fileName.replace(":", "__");
     QString filePath = PathProvider::instance().imageLocation() + "/" + fileName;

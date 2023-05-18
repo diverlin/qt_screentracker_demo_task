@@ -30,7 +30,7 @@ void GalleryWidget::push(const QPixmap& pixmap, const QString hash, double diffP
     refreshView();
 }
 
-void GalleryWidget::reset()
+void GalleryWidget::clear()
 {
     m_fixedqueue.clear();
     refreshView();

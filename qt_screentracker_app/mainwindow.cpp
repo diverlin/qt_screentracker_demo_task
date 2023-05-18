@@ -10,6 +10,7 @@
 #include <QImageReader>
 #include <QFileInfo>
 #include <QColorSpace>
+#include <QDir>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget* parent)
@@ -23,20 +24,13 @@ MainWindow::MainWindow(QWidget* parent)
     qDebug() << QImageReader::supportedImageFormats();
 
     connect(m_ui->pbToggleTimer, &QPushButton::clicked, this, [this](){
-        m_screensShooter->makeScreensShot();
-//        if (m_screenShooter->isRunning()) {
-//            m_screenShooter->stop();
-//            m_ui->pbToggle->setProperty("running", false);
-//        } else {
-//            m_screenShooter->start();
-//            m_ui->pbToggle->setProperty("running", true);
-//        }
-    });
-
-    connect(m_ui->pbClearHistory, &QPushButton::clicked, this, [this](){
-        m_dataStorage->reset();
-        reset();
-        loadFromDataStorage();
+        if (m_screensShooter->isRunning()) {
+            m_screensShooter->stop();
+            m_ui->pbToggleTimer->setProperty("running", false);
+        } else {
+            m_screensShooter->start();
+            m_ui->pbToggleTimer->setProperty("running", true);
+        }
     });
 
     connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [this](QString filePath){
@@ -56,6 +50,18 @@ MainWindow::MainWindow(QWidget* parent)
 
         m_prevImagePath = filePath;
     });
+
+    // for testing
+    connect(m_ui->pbMakeScreenShot, &QPushButton::clicked, this, [this](){
+        m_screensShooter->makeScreensShot();
+    });
+
+    connect(m_ui->pbClearHistory, &QPushButton::clicked, this, [this](){
+        m_dataStorage->reset();
+        clear();
+        loadFromDataStorage();
+    });
+    // for testing
 
     loadFromDataStorage();
 }
@@ -80,16 +86,28 @@ QPixmap MainWindow::loadPixmap(const QString& filePath)
     return QPixmap::fromImage(newImage);
 }
 
-void MainWindow::reset()
+void MainWindow::clear()
 {
-    m_ui->gallery->reset();
+    m_ui->gallery->clear();
+    QDir directory(PathProvider::instance().imageLocation());
+    QStringList fileNames = directory.entryList(QDir::Files | QDir::NoDotAndDotDot);
+    for (const QString& fileName: qAsConst(fileNames)) {
+        QString filePath = directory.filePath(fileName);
+        if (filePath.endsWith("png")) {
+            qInfo() << "remove" << filePath;
+            QFile::remove(filePath);
+        }
+    }
 }
 
 void MainWindow::loadFromDataStorage()
 {
     std::vector<std::tuple<QString, QString, double>> rows;
+
     m_dataStorage->readRows(m_ui->gallery->cellsCount(), rows);
-    for (const std::tuple<QString, QString, double>& row: rows) {
+    std::vector<std::tuple<QString, QString, double>>::reverse_iterator it = rows.rbegin();
+    for (; it!=rows.rend(); ++it) {
+        const std::tuple<QString, QString, double>& row = *it;
         QString baseFileName;
         QString hash;
         double diffPerc;

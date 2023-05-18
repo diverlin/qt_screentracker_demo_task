@@ -26,6 +26,13 @@
      <widget class="GalleryWidget" name="gallery" native="true"/>
     </item>
     <item>
+     <widget class="QPushButton" name="pbMakeScreenShot">
+      <property name="text">
+       <string>Make ScreenShot</string>
+      </property>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pbClearHistory">
       <property name="text">
        <string>Clear History</string>
