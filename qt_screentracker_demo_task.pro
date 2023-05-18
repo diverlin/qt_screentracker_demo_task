@@ -1,6 +1,4 @@
-QT       += core gui
-
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui widgets
 
 CONFIG += c++11
 
@@ -12,10 +10,12 @@ SOURCES += \
     src/main.cpp \
     src/mainwindow.cpp \
     src/gallerywidget.cpp \
+    src/screensshooter.cpp \
 
 HEADERS += \
     src/mainwindow.h \
     src/gallerywidget.h \
+    src/screensshooter.h \
 
 FORMS += \
     forms/mainwindow.ui \

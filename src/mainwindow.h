@@ -7,6 +7,8 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
+class ScreensShooter;
+
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
@@ -17,6 +19,7 @@ public:
 
 private:
     Ui::MainWindow* m_ui = nullptr;
+    ScreensShooter* m_screensShooter = nullptr;
 };
 
 #endif // MAINWINDOW_H
