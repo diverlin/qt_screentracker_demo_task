@@ -4,7 +4,7 @@
 #include <QFile>
 #include <QDebug>
 
-double ImageComparator::calculateImageDifference(const QString& imagePath1, const QString& imagePath2)
+double ImageComparator::calculateImagesSimularity(const QString& imagePath1, const QString& imagePath2)
 {
     QImage image1(imagePath1);
     QImage image2(imagePath2);
@@ -30,8 +30,8 @@ double ImageComparator::calculateImageDifference(const QString& imagePath1, cons
         }
     }
 
-    double differencePercentage = (static_cast<double>(numDifferingPixels) / numPixels) * 100.0;
-    qDebug() << "Percentage difference:" << differencePercentage;
+    double simularityPercentage = 100.0 - (static_cast<double>(numDifferingPixels) / numPixels) * 100.0;
+    qDebug() << "Percentage simmularity:" << simularityPercentage;
 
-    return differencePercentage;
+    return simularityPercentage;
 }

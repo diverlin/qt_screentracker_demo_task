@@ -5,8 +5,7 @@
 
 class ImageComparator {
 public:
-    static double calculateImageDifference(const QString&, const QString&);
+    static double calculateImagesSimularity(const QString&, const QString&);
 };
-
 
 #endif // IMAGECOMPARATOR_H

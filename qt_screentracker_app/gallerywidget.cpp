@@ -24,9 +24,9 @@ GalleryWidget::~GalleryWidget()
 {
 }
 
-void GalleryWidget::push(const QPixmap& pixmap, const QString hash, double diffPerc)
+void GalleryWidget::push(const QPixmap& pixmap, const QString hash, double simPerc)
 {
-    m_fixedqueue.push(std::tuple<QPixmap, QString, double>(pixmap, hash, diffPerc));
+    m_fixedqueue.push(std::tuple<QPixmap, QString, double>(pixmap, hash, simPerc));
     refreshView();
 }
 
@@ -50,9 +50,9 @@ void GalleryWidget::refreshView()
                         if (index < m_fixedqueue.size()) {
                             QPixmap pixmap;
                             QString hash;
-                            double diffPerc;
-                            std::tie(pixmap, hash, diffPerc) = m_fixedqueue.at(index);
-                            iw->setImage(pixmap, hash, diffPerc);
+                            double simPerc;
+                            std::tie(pixmap, hash, simPerc) = m_fixedqueue.at(index);
+                            iw->setImage(pixmap, hash, simPerc);
                         } else {
                             iw->clear();
                         }

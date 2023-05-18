@@ -14,7 +14,7 @@ ImageWidget::~ImageWidget()
 {
 }
 
-void ImageWidget::setImage(const QPixmap& pixmap, const QString& hash, double diffPerc)
+void ImageWidget::setImage(const QPixmap& pixmap, const QString& hash, double simPerc)
 {
     QLabel::setPixmap(pixmap);
     m_overlay->setText(hash);

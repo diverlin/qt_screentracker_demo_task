@@ -10,9 +10,9 @@ public:
     ~ImageComparatorTest()=default;
 
 private slots:
-    void testDiff_0_Perc();
-    void testDiff_50_Perc();
-    void testDiff_100_Perc();
+    void testSimularity_0_Perc();
+    void testSimularity_50_Perc();
+    void testSimularity_100_Perc();
 };
 
 #endif // IMAGECOMPARATORTEST_H

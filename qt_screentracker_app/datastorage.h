@@ -13,7 +13,7 @@ public:
 
     const QString& filePath() const { return m_dbFilePath; }
 
-    bool insertRows(const QString& fileName, const QString& md5Sum, double diffPerc);
+    bool insertRows(const QString& fileName, const QString& hash, double simPerc);
 
     bool readRows(size_t limit, std::vector<std::tuple<QString, QString, double>>& result) const;
 

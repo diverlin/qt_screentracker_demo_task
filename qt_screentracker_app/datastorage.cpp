@@ -35,7 +35,7 @@ bool DataStorage::createTable() {
     }
 
     QSqlQuery query;
-    QString createQuery = "CREATE TABLE IF NOT EXISTS activity (id INTEGER PRIMARY KEY, baseFileName STRING, md5Sum STRING, diffPerc DOUBLE)";
+    QString createQuery = "CREATE TABLE IF NOT EXISTS activity (id INTEGER PRIMARY KEY, baseFileName STRING, hash STRING, simPerc DOUBLE)";
     if (!query.exec(createQuery)) {
         qDebug() << "Failed to create table:" << query.lastError().text();
         return false;
@@ -45,7 +45,7 @@ bool DataStorage::createTable() {
     return true;
 }
 
-bool DataStorage::insertRows(const QString& fileName, const QString& md5Sum, double diffPerc)
+bool DataStorage::insertRows(const QString& fileName, const QString& hash, double simPerc)
 {
     QSqlDatabase db = QSqlDatabase::database();
     if (!db.open()) {
@@ -54,10 +54,10 @@ bool DataStorage::insertRows(const QString& fileName, const QString& md5Sum, dou
     }
 
     QSqlQuery query;
-    query.prepare("INSERT INTO activity (baseFileName, md5Sum, diffPerc) VALUES (:baseFileName, :md5Sum, :diffPerc)");
+    query.prepare("INSERT INTO activity (baseFileName, hash, simPerc) VALUES (:baseFileName, :hash, :simPerc)");
     query.bindValue(":baseFileName", fileName);
-    query.bindValue(":md5Sum", md5Sum);
-    query.bindValue(":diffPerc", diffPerc);
+    query.bindValue(":hash", hash);
+    query.bindValue(":simPerc", simPerc);
 
     if (!query.exec()) {
         qDebug() << "Failed to insert row:" << query.lastError().text();
@@ -79,16 +79,15 @@ bool DataStorage::readRows(size_t limit, std::vector<std::tuple<QString, QString
     }
 
     QSqlQuery query(QString("SELECT * FROM activity ORDER BY id DESC LIMIT %1").arg(limit));
-    //QSqlQuery query(QString("SELECT * FROM activity LIMIT %1").arg(limit));
 
     while (query.next()) {
         int id = query.value("id").toInt();
         QString baseFileName = query.value("baseFileName").toString();
-        QString md5Sum = query.value("md5Sum").toString();
-        double diffPerc = query.value("diffPerc").toDouble();
+        QString hash = query.value("hash").toString();
+        double simPerc = query.value("simPerc").toDouble();
 
-        result.emplace_back(std::tuple<QString, QString, double>{baseFileName, md5Sum, diffPerc});
-        qDebug() << "id:" << id << "baseFileName:" << baseFileName << "md5Sum:" << md5Sum << "diffPerc:" << diffPerc;
+        result.emplace_back(std::tuple<QString, QString, double>{baseFileName, hash, simPerc});
+        qDebug() << "id:" << id << "baseFileName:" << baseFileName << "hash:" << hash << "simPerc:" << simPerc;
     }
 
     db.close();
