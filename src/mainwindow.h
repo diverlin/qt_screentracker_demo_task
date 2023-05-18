@@ -20,6 +20,9 @@ public:
 private:
     Ui::MainWindow* m_ui = nullptr;
     ScreensShooter* m_screensShooter = nullptr;
+
+    QString m_prevImagePath;
+    const QString& getPrevImagePath() const { return m_prevImagePath; }
 };
 
 #endif // MAINWINDOW_H

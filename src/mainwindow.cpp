@@ -3,6 +3,7 @@
 
 #include "screensshooter.h"
 #include "hashsumutils.h"
+#include "imagecomparator.h"
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
@@ -22,9 +23,15 @@ MainWindow::MainWindow(QWidget* parent)
 //        }
     });
 
-    connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [](QString filePath){
+    connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [this](QString filePath){
         QString hash = HashSumUtils::getHashSumOfFile(filePath);
-        qInfo() << "get hash" << hash << "for" << filePath;
+        QString prevImagePath = getPrevImagePath();
+        if (!prevImagePath.isEmpty()) {
+            double perc = ImageComparator::calculateImageDifference(prevImagePath, filePath);
+            qInfo() << "perc difference=" << perc << "%";
+        }
+        qInfo() << "hash=" << hash << "for" << filePath;
+        m_prevImagePath = filePath;
     });
 }
 

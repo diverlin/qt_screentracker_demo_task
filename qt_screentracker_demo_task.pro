@@ -12,12 +12,14 @@ SOURCES += \
     src/gallerywidget.cpp \
     src/screensshooter.cpp \
     src/hashsumutils.cpp \
+    src/imagecomparator.cpp \
 
 HEADERS += \
     src/mainwindow.h \
     src/gallerywidget.h \
     src/screensshooter.h \
     src/hashsumutils.h \
+    src/imagecomparator.h \
 
 FORMS += \
     forms/mainwindow.ui \
