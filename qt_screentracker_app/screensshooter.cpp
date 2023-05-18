@@ -99,7 +99,9 @@ void ScreensShooter::makeScreensShotOnWaylandDisplayServer()
 
 void ScreensShooter::saveImageFile(const QPixmap& image)
 {
-    QString fileName = QString("screensshot_%1.png").arg(QDateTime::currentDateTime().toString()).replace(" ", "_");
+    QString fileName = QString("screensshot_%1.png").arg(QDateTime::currentDateTime().toString());
+    fileName = fileName.replace(" ", "_");
+    fileName = fileName.replace(":", "__");
     QString filePath = PathProvider::instance().imageLocation() + "/" + fileName;
 
     // Save the screenshot to a file
