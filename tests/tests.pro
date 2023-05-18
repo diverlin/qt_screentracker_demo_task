@@ -13,6 +13,9 @@ HEADERS += \
     $$PWD/datastoragetest.h \
     $$PWD/imagecomparatortest.h \
 
+RESOURCES += \
+    tests.qrc
+
 
 
 

@@ -11,11 +11,11 @@ void DataStorageTest::testDbCreation()
     DataStorage db("test.db");
     QString filePath = db.filePath();
     qInfo()<< "checking" << filePath << "existance";
-    Q_ASSERT(QFileInfo::exists(filePath));
+    QVERIFY(QFileInfo::exists(filePath));
 
     // remove db
-    Q_ASSERT(QFile(filePath).remove());
-    Q_ASSERT(!QFileInfo::exists(filePath));
+    QVERIFY(QFile(filePath).remove());
+    QVERIFY(!QFileInfo::exists(filePath));
 }
 
 void DataStorageTest::testDbReadWrite()
@@ -24,36 +24,36 @@ void DataStorageTest::testDbReadWrite()
     DataStorage db("test.db");
 
     // write data
-    Q_ASSERT(db.insertRows("1", "xxx", 0.2));
-    Q_ASSERT(db.insertRows("2", "yyy", 0.3));
-    Q_ASSERT(db.insertRows("3", "zzz", 0.4));
+    QVERIFY(db.insertRows("1", "xxx", 0.2));
+    QVERIFY(db.insertRows("2", "yyy", 0.3));
+    QVERIFY(db.insertRows("3", "zzz", 0.4));
 
     // read data
     std::vector<std::tuple<QString, QString, double>> rows;
-    Q_ASSERT(db.readRows(rows));
-    Q_ASSERT(rows.size()==3);
+    QVERIFY(db.readRows(rows));
+    QCOMPARE(rows.size(),3);
     QString id, md5Sum;
     double percDiff;
 
     // test read row1
     std::tie(id, md5Sum, percDiff) = rows[0];
-    Q_ASSERT(id == "1");
-    Q_ASSERT(md5Sum == "xxx");
-    Q_ASSERT(qFuzzyCompare(percDiff, 0.2));
+    QCOMPARE(id, "1");
+    QCOMPARE(md5Sum, "xxx");
+    QCOMPARE(percDiff, 0.2);
 
     // test read row2
     std::tie(id, md5Sum, percDiff) = rows[1];
-    Q_ASSERT(id == "2");
-    Q_ASSERT(md5Sum == "yyy");
-    Q_ASSERT(qFuzzyCompare(percDiff, 0.3));
+    QCOMPARE(id, "2");
+    QCOMPARE(md5Sum, "yyy");
+    QCOMPARE(percDiff, 0.3);
 
     // test read row3
     std::tie(id, md5Sum, percDiff) = rows[2];
-    Q_ASSERT(id == "3");
-    Q_ASSERT(md5Sum == "zzz");
-    Q_ASSERT(qFuzzyCompare(percDiff, 0.4));
+    QCOMPARE(id, "3");
+    QCOMPARE(md5Sum, "zzz");
+    QCOMPARE(percDiff, 0.4);
 
     // remove db
-    Q_ASSERT(QFile(db.filePath()).remove());
-    Q_ASSERT(!QFileInfo::exists(db.filePath()));
+    QVERIFY(QFile(db.filePath()).remove());
+    QVERIFY(!QFileInfo::exists(db.filePath()));
 }

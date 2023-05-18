@@ -10,9 +10,9 @@ public:
     ~ImageComparatorTest()=default;
 
 private slots:
-    void testMatch_0_Perc();
-    void testMatch_50_Perc();
-    void testMatch_100_Perc();
+    void testDiff_0_Perc();
+    void testDiff_50_Perc();
+    void testDiff_100_Perc();
 };
 
 #endif // IMAGECOMPARATORTEST_H
