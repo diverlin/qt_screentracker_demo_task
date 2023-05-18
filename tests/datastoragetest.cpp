@@ -16,7 +16,8 @@ DataStorageTest::~DataStorageTest()
 
 void DataStorageTest::testBase()
 {
-    DataStorage storage("test.db");
-    QString filePath = storage.filePath();
-    Q_ASSERT(QFileInfo::exists(filePath));
+//    DataStorage storage("test.db");
+//    QString filePath = storage.filePath();
+//    Q_ASSERT(QFileInfo::exists(filePath));
+    Q_ASSERT(false);
 }
