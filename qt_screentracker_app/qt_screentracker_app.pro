@@ -1,6 +1,6 @@
 QT += core gui widgets sql
 
-include(qt_screentracker_demo_task.pri)
+include(qt_screentracker_lib.pri)
 
 SOURCES += \
     $$PWD/main.cpp
