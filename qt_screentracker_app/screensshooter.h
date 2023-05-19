@@ -34,6 +34,7 @@ private:
 #endif
 
     void saveImageFile(const QPixmap&);
+    QPixmap joinPixmaps(const QPixmap& pixmap1, const QPixmap& pixmap2);
 };
 
 #endif // SCREENSSHOOTER_H

@@ -9,6 +9,7 @@
 #include <QPixmap>
 #include <QDateTime>
 #include <QRandomGenerator>
+#include <QPainter>
 
 #ifdef Q_OS_LINUX
 #include <QProcessEnvironment>
@@ -70,16 +71,27 @@ void ScreensShooter::makeScreensShotGeneric()
         if (combinedScreenshot.isNull()) {
             combinedScreenshot = screenScreenshot;
         } else {
-            // Combine the screen screenshot with the existing combined screenshot
-#if QT_VERSION <= QT_VERSION_CHECK(6, 0, 0)
-            combinedScreenshot = QPixmap::grabWindow(QApplication::desktop()->winId()).copy(0, 0, combinedScreenshot.width(), combinedScreenshot.height());
-#else
-            qCritical() << "multimonitor image saving is not implemented on Qt6 variant, please use Qt5 for now or implement it on Qt6";
-#endif
+            combinedScreenshot = joinPixmaps(combinedScreenshot, screenScreenshot);
         }
     }
 
     saveImageFile(combinedScreenshot);
+}
+
+QPixmap ScreensShooter::joinPixmaps(const QPixmap& pixmap1, const QPixmap& pixmap2)
+{
+    int width = pixmap1.width() + pixmap2.width();
+    int height = qMax(pixmap1.height(), pixmap2.height());
+
+    QPixmap joinedPixmap(width, height);
+    joinedPixmap.fill(Qt::transparent);
+
+    QPainter painter(&joinedPixmap);
+    painter.drawPixmap(0, 0, pixmap1);
+    painter.drawPixmap(pixmap1.width(), 0, pixmap2);
+    painter.end();
+
+    return joinedPixmap;
 }
 
 #ifdef Q_OS_LINUX
