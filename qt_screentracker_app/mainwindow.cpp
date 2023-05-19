@@ -2,10 +2,9 @@
 #include "ui_mainwindow.h"
 
 #include "screensshooter.h"
-#include "hashsumutils.h"
-#include "imagecomparator.h"
 #include "datastorage.h"
 #include "pathprovider.h"
+#include "jobfactory.h"
 
 #include <QImageReader>
 #include <QFileInfo>
@@ -20,6 +19,7 @@ MainWindow::MainWindow(QWidget* parent)
     , m_ui(new Ui::MainWindow)
     , m_screensShooter(new ScreensShooter(this))
     , m_dataStorage(new DataStorage("data.db"))
+    , m_jobFactory(new JobFactory(this, /*multithreading*/true))
 {
     m_ui->setupUi(this);
 
@@ -48,22 +48,18 @@ MainWindow::MainWindow(QWidget* parent)
         m_ui->pbToggleTimer->style()->polish(m_ui->pbToggleTimer);
     });
 
-    connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [this](QString filePath){
-        QString hash = HashSumUtils::getHashSumOfFile(filePath);
+    connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [this](QString imageFilePath){
         QString prevImagePath = getPrevImagePath();
-        double simPerc = 0.0;
-        if (!prevImagePath.isEmpty()) {
-            simPerc = ImageComparator::calculateImagesSimularity(prevImagePath, filePath);
-            qInfo() << "simPerc=" << simPerc << "%";
-        }
-        qInfo() << "hash=" << hash << "for" << filePath;
+        m_jobFactory->pushJob(imageFilePath, getPrevImagePath());
+    });
 
-        QString baseFileName = QFileInfo(filePath).baseName();
+    connect(m_jobFactory, &JobFactory::jobDone, this, [this](QString imageFilePath, QString hash, double simPerc){
+        QString baseFileName = QFileInfo(imageFilePath).baseName();
         m_dataStorage->insertRows(baseFileName, hash, simPerc);
-        QPixmap pixmap = loadPixmap(filePath);
+        QPixmap pixmap = loadPixmap(imageFilePath);
         m_ui->gallery->push(pixmap, hash, simPerc);
 
-        m_prevImagePath = filePath;
+        m_prevImagePath = imageFilePath;
     });
 
     // for testing

@@ -11,6 +11,7 @@ QT_END_NAMESPACE
 
 class ScreensShooter;
 class DataStorage;
+class JobFactory;
 
 class MainWindow : public QMainWindow
 {
@@ -28,6 +29,9 @@ private:
     DataStorage* m_dataStorage = nullptr;
 
     QString m_prevImagePath;
+
+    JobFactory* m_jobFactory = nullptr;
+
     const QString& getPrevImagePath() const { return m_prevImagePath; }
 
     QPixmap loadPixmap(const QString& filePath);

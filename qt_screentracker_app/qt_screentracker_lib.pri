@@ -9,6 +9,7 @@ SOURCES += \
     $$PWD/imagecomparator.cpp \
     $$PWD/datastorage.cpp \
     $$PWD/pathprovider.cpp \
+    $$PWD/jobfactory.cpp \
 
 HEADERS += \
     $$PWD/mainwindow.h \
@@ -20,6 +21,7 @@ HEADERS += \
     $$PWD/datastorage.h \
     $$PWD/pathprovider.h \
     $$PWD/fixedqueue.h \
+    $$PWD/jobfactory.h \
 
 FORMS += \
     $$PWD/forms/mainwindow.ui \
