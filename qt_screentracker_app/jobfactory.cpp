@@ -58,7 +58,9 @@ void SimularityPercentageWorker::doWork()
 JobFactory::JobFactory(QObject* parent, bool multithreading)
     : QObject(parent)
     , m_multithreading(multithreading)
+#if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
     , m_jobsResultMutex(QMutex::Recursive)
+#endif
 {
 
 }
