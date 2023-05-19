@@ -6,6 +6,7 @@
 DataStorage::DataStorage(const QString& dbFileName)
     : m_dbFilePath(PathProvider::instance().dbLocation() + "/" + dbFileName)
 {
+    qInfo() << "db location" << m_dbFilePath;
     createTable();
 }
 
