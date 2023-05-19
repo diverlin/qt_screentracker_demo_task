@@ -32,26 +32,26 @@ void DataStorageTest::testDbReadWrite()
     std::vector<std::tuple<QString, QString, double>> rows;
     QVERIFY(db.readRows(100, rows));
     QCOMPARE(rows.size(),3);
-    QString id, md5Sum;
-    double diffPerc;
+    QString id, hash;
+    double simPerc;
 
     // test read row1
-    std::tie(id, md5Sum, diffPerc) = rows[0];
-    QCOMPARE(id, "1");
-    QCOMPARE(md5Sum, "xxx");
-    QCOMPARE(diffPerc, 0.2);
+    std::tie(id, hash, simPerc) = rows[0];
+    QCOMPARE(id, "3");
+    QCOMPARE(hash, "zzz");
+    QCOMPARE(simPerc, 0.4);
 
     // test read row2
-    std::tie(id, md5Sum, diffPerc) = rows[1];
+    std::tie(id, hash, simPerc) = rows[1];
     QCOMPARE(id, "2");
-    QCOMPARE(md5Sum, "yyy");
-    QCOMPARE(diffPerc, 0.3);
+    QCOMPARE(hash, "yyy");
+    QCOMPARE(simPerc, 0.3);
 
     // test read row3
-    std::tie(id, md5Sum, diffPerc) = rows[2];
-    QCOMPARE(id, "3");
-    QCOMPARE(md5Sum, "zzz");
-    QCOMPARE(diffPerc, 0.4);
+    std::tie(id, hash, simPerc) = rows[2];
+    QCOMPARE(id, "1");
+    QCOMPARE(hash, "xxx");
+    QCOMPARE(simPerc, 0.2);
 
     // remove db
     QVERIFY(QFile(db.filePath()).remove());
