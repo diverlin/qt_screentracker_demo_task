@@ -124,6 +124,7 @@ void MainWindow::loadFromDataStorage()
         double diffPerc;
         std::tie(baseFileName, hash, diffPerc) = row;
         QString filePath = PathProvider::instance().imageLocation()+"/"+baseFileName+".png";
+        m_prevImagePath = filePath;
         QPixmap pixmap = loadPixmap(filePath);
         m_ui->gallery->push(pixmap, hash, diffPerc);
     }
