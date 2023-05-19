@@ -1,0 +1,29 @@
+#pbToggleTimer {
+    background: #00B894;
+    border-radius: 6px;
+    font: 18px;
+}
+
+#pbToggleTimer[running="true"] {
+    background: #E74C3C;
+}
+
+#lbTimer {
+    background: #E74C3C;
+    color: white;
+    border-radius: 6px;
+    font: 18px;
+}
+
+ImageWidget {
+    background: #808080;
+    border-radius: 6px;
+}
+
+ImageWidget QWidget {
+    background: #E74C3C;
+    border-radius: 6px;
+}
+
+
+

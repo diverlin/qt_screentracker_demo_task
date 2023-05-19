@@ -15,7 +15,9 @@ public:
     void clear();
 
 private:
-    QLabel* m_overlay;
+    QWidget* m_overlayContainer = nullptr;
+    QLabel* m_lbHashOverlay = nullptr;
+    QLabel* m_lbSimularityOverlay = nullptr;
 };
 
 #endif // IMAGEWIDGET_H

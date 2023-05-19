@@ -11,6 +11,8 @@
 #include <QFileInfo>
 #include <QColorSpace>
 #include <QDir>
+#include <QStyle>
+#include <QProgressBar>
 #include <QDebug>
 
 MainWindow::MainWindow(QWidget* parent)
@@ -21,16 +23,29 @@ MainWindow::MainWindow(QWidget* parent)
 {
     m_ui->setupUi(this);
 
-    qDebug() << QImageReader::supportedImageFormats();
+    m_realTimeTimer.setInterval(20);
+    connect(&m_realTimeTimer, &QTimer::timeout, this, [this](){
+        m_ui->lbTimer->setText(QString("%1ms").arg(m_elapsedTimer.elapsed()));
+    });
 
     connect(m_ui->pbToggleTimer, &QPushButton::clicked, this, [this](){
         if (m_screensShooter->isRunning()) {
             m_screensShooter->stop();
+            m_ui->pbToggleTimer->setText(tr("ON Timer"));
             m_ui->pbToggleTimer->setProperty("running", false);
+
+            m_realTimeTimer.stop();
+            m_ui->lbTimer->setText("0ms");
         } else {
             m_screensShooter->start();
+            m_ui->pbToggleTimer->setText(tr("OFF Timer"));
             m_ui->pbToggleTimer->setProperty("running", true);
+
+            m_realTimeTimer.start();
+            m_elapsedTimer.start();
         }
+        m_ui->pbToggleTimer->style()->unpolish(m_ui->pbToggleTimer);
+        m_ui->pbToggleTimer->style()->polish(m_ui->pbToggleTimer);
     });
 
     connect(m_screensShooter, &ScreensShooter::screenShotIsReady, [this](QString filePath){

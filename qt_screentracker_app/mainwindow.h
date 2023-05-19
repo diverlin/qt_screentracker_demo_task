@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QTimer>
+#include <QElapsedTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -19,6 +21,8 @@ public:
     ~MainWindow();
 
 private:
+    QElapsedTimer m_elapsedTimer;
+    QTimer m_realTimeTimer;
     Ui::MainWindow* m_ui = nullptr;
     ScreensShooter* m_screensShooter = nullptr;
     DataStorage* m_dataStorage = nullptr;

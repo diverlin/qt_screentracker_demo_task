@@ -14,7 +14,6 @@ GalleryWidget::GalleryWidget(QWidget* parent)
         for (int col=0; col<GALLERY_ROWS_NUM; ++col) {
             ImageWidget* iw = new ImageWidget(this);
             iw->setFixedSize(300, 200);
-            iw->setStyleSheet("background: red;");
             m_gridLayout->addWidget(iw, row, col);
         }
     }

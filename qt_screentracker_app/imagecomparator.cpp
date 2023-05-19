@@ -11,12 +11,12 @@ double ImageComparator::calculateImagesSimularity(const QString& imagePath1, con
 
     if (image1.isNull() || image2.isNull()) {
         qDebug() << "Failed to load images.";
-        return -1.0;
+        return 0.0;
     }
 
     if (image1.size() != image2.size()) {
         qDebug() << "Images have different dimensions.";
-        return -1.0;
+        return 0.0;
     }
 
     int numPixels = image1.width() * image1.height();

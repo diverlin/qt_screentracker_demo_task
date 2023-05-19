@@ -31,7 +31,6 @@ ScreensShooter::~ScreensShooter()
 void ScreensShooter::start()
 {
     m_timer.start();
-    makeScreensShot();
 }
 
 void ScreensShooter::stop()
