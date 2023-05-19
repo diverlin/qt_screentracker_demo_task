@@ -61,7 +61,7 @@ void ScreensShooter::makeScreensShotGeneric()
     // iterate over each screen and capture its screenshot
     for (QScreen* screen: qAsConst(screens)) {
         // capture the screen's screenshot
-        qDebug() << "proc screen" << screen->name();
+        qDebug() << "process screen" << screen->name();
         QPixmap screenScreenshot = screen->grabWindow(0);
 
         // If this is the first screen, initialize the combined screenshot pixmap
